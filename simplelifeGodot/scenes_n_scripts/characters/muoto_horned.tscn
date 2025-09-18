@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://ne4ke64ln2u7"]
+
+[ext_resource type="SpriteFrames" uid="uid://6y551mioclqc" path="res://assets/sprite_frames/muoto_horned_sprite_frames.tres" id="1_cha4v"]
+[ext_resource type="Script" uid="uid://bplu1ftlm8une" path="res://scenes_n_scripts/characters/muoto_horned.gd" id="1_pumqa"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_61x1r"]
+radius = 13.0
+height = 28.0
+
+[node name="MuotoHorned" type="AnimatableBody2D"]
+script = ExtResource("1_pumqa")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, -32)
+sprite_frames = ExtResource("1_cha4v")
+animation = &"idle_wide"
+autoplay = "idle_wide"
+frame_progress = 0.469527
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_as_relative = false
+position = Vector2(0, -14)
+shape = SubResource("CapsuleShape2D_61x1r")

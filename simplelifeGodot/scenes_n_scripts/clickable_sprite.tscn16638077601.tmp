@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3l3552kvioik"]
+
+[ext_resource type="Script" uid="uid://d3pgonhfm0vpx" path="res://scenes/clickable_sprite.gd" id="1_235b1"]
+
+[node name="ClickableSprite" type="Node"]
+script = ExtResource("1_235b1")

@@ -1,0 +1,199 @@
+[gd_scene load_steps=32 format=3 uid="uid://dxffxtgjaqlqe"]
+
+[ext_resource type="Texture2D" uid="uid://bea167ln810c" path="res://assets/sprites/temp_home_1st_floor_chair.png" id="1_1ck6i"]
+[ext_resource type="Texture2D" uid="uid://bqu4ljtx031y4" path="res://assets/sprites/temp_home_1st_floor_table.png" id="2_8hal7"]
+[ext_resource type="Texture2D" uid="uid://cptdtmyv3cs53" path="res://assets/sprites/temp_home_2nd_floor_ceiling_lamp.png" id="3_61x1r"]
+[ext_resource type="Texture2D" uid="uid://dm1vtl6nd7rgx" path="res://assets/sprites/temp_home_2nd_floor_window.png" id="4_qk2sv"]
+[ext_resource type="Texture2D" uid="uid://diywjcl8dud8f" path="res://assets/sprites/temp_home_back_wall.png" id="5_fk0f4"]
+[ext_resource type="Texture2D" uid="uid://b3nbk4u636jsm" path="res://assets/sprites/temp_home_bathroom_ceiling.png" id="6_l1ed4"]
+[ext_resource type="Texture2D" uid="uid://d0jeaon7q142w" path="res://assets/sprites/temp_home_bathroom_cupboard.png" id="7_11y8x"]
+[ext_resource type="Texture2D" uid="uid://n8c8luus05l3" path="res://assets/sprites/temp_home_bathroom_sink.png" id="8_o5opc"]
+[ext_resource type="Texture2D" uid="uid://dokx1qb22gpa5" path="res://assets/sprites/temp_home_bathtub.png" id="9_jecdd"]
+[ext_resource type="Texture2D" uid="uid://bwecb4shr3tlf" path="res://assets/sprites/temp_home_clothes_rack.png" id="10_ruwg0"]
+[ext_resource type="Texture2D" uid="uid://82fm235f7gwa" path="res://assets/sprites/temp_home_fridge.png" id="11_ckh14"]
+[ext_resource type="Texture2D" uid="uid://btmxca2kfipk3" path="res://assets/sprites/temp_home_front_door.png" id="12_5q4ae"]
+[ext_resource type="Texture2D" uid="uid://d1xmeqb2kustg" path="res://assets/sprites/temp_home_gp_n_pennies.png" id="13_yy24b"]
+[ext_resource type="Texture2D" uid="uid://bdbxwodgjnow8" path="res://assets/sprites/temp_home_home_frame.png" id="14_dru6r"]
+[ext_resource type="Texture2D" uid="uid://cuq4cqs4skyjp" path="res://assets/sprites/temp_home_kitchen_range.png" id="15_5u37l"]
+[ext_resource type="Texture2D" uid="uid://dj3kilx04r8qh" path="res://assets/sprites/temp_home_loft_bed.png" id="16_fbf33"]
+[ext_resource type="Texture2D" uid="uid://b41a3b4ykhpfe" path="res://assets/sprites/temp_home_loft_floor.png" id="17_pvgon"]
+[ext_resource type="Texture2D" uid="uid://djmeknfunbt5t" path="res://assets/sprites/temp_home_loft_ladder.png" id="18_g20y7"]
+[ext_resource type="Texture2D" uid="uid://3in7abwdgrm" path="res://assets/sprites/temp_home_menu_button.png" id="19_7wl2t"]
+[ext_resource type="Texture2D" uid="uid://do1s8mkw6ef4u" path="res://assets/sprites/temp_home_motivate_button_down.png" id="20_w8qpy"]
+[ext_resource type="Texture2D" uid="uid://b37n3fuh4hc3f" path="res://assets/sprites/temp_home_motivate_button_up.png" id="21_20m5u"]
+[ext_resource type="Texture2D" uid="uid://upv4bo70bfny" path="res://assets/sprites/temp_home_motivation_bg_down.png" id="22_lsfk0"]
+[ext_resource type="Texture2D" uid="uid://bwf238ruerww8" path="res://assets/sprites/temp_home_motivation_bg_up.png" id="23_jgwsy"]
+[ext_resource type="Texture2D" uid="uid://cp2ie04pjox5h" path="res://assets/sprites/temp_home_rope_bridge.png" id="24_2nc7l"]
+[ext_resource type="Script" uid="uid://8ngdithp6wii" path="res://scenes_n_scripts/motivation_bar.gd" id="24_fk0f4"]
+[ext_resource type="Texture2D" uid="uid://b27gbr1qaocqs" path="res://assets/sprites/temp_home_stairs.png" id="25_oeba1"]
+[ext_resource type="Shader" uid="uid://dxag43b87becu" path="res://shaders/button_hover_color.gdshader" id="26_1b05o"]
+[ext_resource type="PackedScene" uid="uid://cl66j8glos6pc" path="res://scenes_n_scripts/ui/clickable_area.tscn" id="26_fk0f4"]
+[ext_resource type="Texture2D" uid="uid://ej7susik1vpc" path="res://assets/sprites/temp_home_toilet.png" id="26_kdhtn"]
+[ext_resource type="PackedScene" uid="uid://ne4ke64ln2u7" path="res://scenes_n_scripts/characters/muoto_horned.tscn" id="29_fk0f4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ciebs"]
+shader = ExtResource("26_1b05o")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_value = 0.0
+
+[node name="TestScene20250917" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="HomeSprites" type="Node" parent="."]
+
+[node name="BackWallNBeyond" type="Node" parent="HomeSprites"]
+
+[node name="TempHomeStairs" type="Sprite2D" parent="HomeSprites/BackWallNBeyond"]
+z_index = -119
+z_as_relative = false
+texture = ExtResource("25_oeba1")
+
+[node name="TempHomeBackWall" type="Sprite2D" parent="HomeSprites/BackWallNBeyond"]
+z_index = -110
+z_as_relative = false
+texture = ExtResource("5_fk0f4")
+
+[node name="ObjectsInHomeSprites" type="Node" parent="HomeSprites"]
+
+[node name="TempHome1StFloorTable" type="Sprite2D" parent="HomeSprites/ObjectsInHomeSprites"]
+z_index = -100
+z_as_relative = false
+texture = ExtResource("2_8hal7")
+
+[node name="TempHome2NdFloorCeilingLamp" type="Sprite2D" parent="HomeSprites/ObjectsInHomeSprites"]
+z_index = -100
+z_as_relative = false
+texture = ExtResource("3_61x1r")
+
+[node name="TempHome2NdFloorWindow" type="Sprite2D" parent="HomeSprites/ObjectsInHomeSprites"]
+z_index = -100
+z_as_relative = false
+texture = ExtResource("4_qk2sv")
+
+[node name="TempHomeBathroomCupboard" type="Sprite2D" parent="HomeSprites/ObjectsInHomeSprites"]
+z_index = -100
+z_as_relative = false
+texture = ExtResource("7_11y8x")
+
+[node name="TempHomeBathroomSink" type="Sprite2D" parent="HomeSprites/ObjectsInHomeSprites"]
+z_index = -100
+z_as_relative = false
+texture = ExtResource("8_o5opc")
+
+[node name="TempHomeBathtub" type="Sprite2D" parent="HomeSprites/ObjectsInHomeSprites"]
+z_index = -100
+z_as_relative = false
+texture = ExtResource("9_jecdd")
+
+[node name="TempHomeClothesRack" type="Sprite2D" parent="HomeSprites/ObjectsInHomeSprites"]
+z_index = -100
+z_as_relative = false
+texture = ExtResource("10_ruwg0")
+
+[node name="TempHomeFridge" type="Sprite2D" parent="HomeSprites/ObjectsInHomeSprites"]
+z_index = -100
+z_as_relative = false
+texture = ExtResource("11_ckh14")
+
+[node name="TempHomeFrontDoor" type="Sprite2D" parent="HomeSprites/ObjectsInHomeSprites"]
+z_index = -100
+z_as_relative = false
+texture = ExtResource("12_5q4ae")
+
+[node name="TempHomeKitchenRange" type="Sprite2D" parent="HomeSprites/ObjectsInHomeSprites"]
+z_index = -100
+z_as_relative = false
+texture = ExtResource("15_5u37l")
+
+[node name="TempHomeLoftBed" type="Sprite2D" parent="HomeSprites/ObjectsInHomeSprites"]
+z_index = -100
+z_as_relative = false
+texture = ExtResource("16_fbf33")
+
+[node name="TempHomeLoftLadder" type="Sprite2D" parent="HomeSprites/ObjectsInHomeSprites"]
+z_index = -100
+z_as_relative = false
+texture = ExtResource("18_g20y7")
+
+[node name="TempHomeRopeBridge" type="Sprite2D" parent="HomeSprites/ObjectsInHomeSprites"]
+z_index = -100
+z_as_relative = false
+texture = ExtResource("24_2nc7l")
+
+[node name="TempHome1StFloorChair" type="Sprite2D" parent="HomeSprites/ObjectsInHomeSprites"]
+z_index = -100
+z_as_relative = false
+texture = ExtResource("1_1ck6i")
+
+[node name="TempHomeToilet" type="Sprite2D" parent="HomeSprites/ObjectsInHomeSprites"]
+z_index = -100
+z_as_relative = false
+texture = ExtResource("26_kdhtn")
+
+[node name="FloorsNFrontWall" type="Node" parent="HomeSprites"]
+
+[node name="TempHomeLoftFloor" type="Sprite2D" parent="HomeSprites/FloorsNFrontWall"]
+z_index = 110
+z_as_relative = false
+texture = ExtResource("17_pvgon")
+
+[node name="TempHomeBathroomCeiling" type="Sprite2D" parent="HomeSprites/FloorsNFrontWall"]
+z_index = 110
+z_as_relative = false
+texture = ExtResource("6_l1ed4")
+
+[node name="TempHomeHomeFrame" type="Sprite2D" parent="HomeSprites/FloorsNFrontWall"]
+z_index = 119
+z_as_relative = false
+texture = ExtResource("14_dru6r")
+
+[node name="Buttons" type="Node" parent="HomeSprites"]
+
+[node name="TempHomeGpNPennies" type="Sprite2D" parent="HomeSprites/Buttons"]
+z_index = 350
+z_as_relative = false
+texture = ExtResource("13_yy24b")
+
+[node name="TempHomeMenuButton" type="Sprite2D" parent="HomeSprites/Buttons"]
+z_index = 350
+z_as_relative = false
+texture = ExtResource("19_7wl2t")
+
+[node name="MotivationBar" type="Node" parent="."]
+script = ExtResource("24_fk0f4")
+
+[node name="MotivationBarDown" type="Sprite2D" parent="MotivationBar"]
+z_index = 350
+z_as_relative = false
+texture = ExtResource("22_lsfk0")
+
+[node name="MotivationBarUp" type="Sprite2D" parent="MotivationBar"]
+z_index = 351
+z_as_relative = false
+material = SubResource("ShaderMaterial_ciebs")
+texture = ExtResource("23_jgwsy")
+
+[node name="ClickableArea" parent="MotivationBar/MotivationBarUp" instance=ExtResource("26_fk0f4")]
+draw_poly = false
+
+[node name="StarButtonDown" type="Sprite2D" parent="MotivationBar"]
+z_index = 360
+z_as_relative = false
+texture = ExtResource("20_w8qpy")
+
+[node name="StarButtonUp" type="Sprite2D" parent="MotivationBar"]
+z_index = 361
+z_as_relative = false
+texture = ExtResource("21_20m5u")
+
+[node name="ClickableArea" parent="MotivationBar/StarButtonUp" instance=ExtResource("26_fk0f4")]
+draw_poly = false
+
+[node name="MuotoHorned" parent="." instance=ExtResource("29_fk0f4")]
+position = Vector2(31, 115)
+
+[connection signal="clicked" from="MotivationBar/MotivationBarUp/ClickableArea" to="MotivationBar" method="_on_motivation_bar_clicked"]
+[connection signal="mouse_entered_area" from="MotivationBar/MotivationBarUp/ClickableArea" to="MotivationBar" method="_on_motivation_bar_mouse_entered"]
+[connection signal="mouse_exited_area" from="MotivationBar/MotivationBarUp/ClickableArea" to="MotivationBar" method="_on_motivation_bar_mouse_exited"]
+[connection signal="clicked" from="MotivationBar/StarButtonUp/ClickableArea" to="MotivationBar" method="_on_star_button_clicked"]
