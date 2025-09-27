@@ -10,7 +10,7 @@ var motivation_points: int = 0:
 	set(value):
 		motivation_points = value
 		label.text = str(motivation_points) + " m"
-		print("Added " + str(value) + " motivation points. Motivation is now: " + str(motivation_points))
+		#print("Added " + str(value) + " motivation points. Motivation is now: " + str(motivation_points))
 
 @onready var bar_down: Sprite2D = $MotivationBarDown
 @onready var bar_up: Sprite2D = $MotivationBarUp
@@ -21,8 +21,8 @@ var motivation_points: int = 0:
 
 func _ready() -> void:
 	sprites = [bar_down, bar_up, star_button_down, star_button_up]
-	InputManager.primary_click_released.connect(_on_primary_click_released)
 	label_og_y_pos = label.position.y
+	InputManager.primary_click_released.connect(_on_primary_click_released)
 	star_button_clickable_area.clicked.connect(_on_star_button_clicked)
 	motivation_bar_clickable_area.clicked.connect(_on_motivation_bar_clicked)
 	motivation_bar_clickable_area.mouse_entered_area.connect(_on_motivation_bar_mouse_entered)

@@ -7,26 +7,33 @@ enum MuotoState {
 	DOING_CHORE,
 }
 
+@export_group("Internal Refs")
 @export var sprite: AnimatedSprite2D
-@export var motivation_bar: MotivationBar
 @export var debug_label: Label
+@export_group("External Refs")
+@export var motivation_bar: MotivationBar
+@export var chore_manager: ChoreManager
+
 
 ## NOTE: Call change_state instead of setting this directly.
 var muoto_state: MuotoState = MuotoState.IDLE
 var walk_speed: float = 20
 var current_chore: ChoreBase
 
+
 func _ready() -> void:
 	var state_name = MuotoState.keys()[MuotoState.values().find(muoto_state)]
 	debug_label.text = str(state_name)
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	match muoto_state:
 		MuotoState.IDLE:
-			physics_process_idle(delta)
+			process_idle()
 		MuotoState.GOING_TO_CHORE:
-			physics_move_towards(delta, current_chore.global_position.x)
+			if(move_towards_target(delta)):
+				change_state(MuotoState.DOING_CHORE)
+				return
 		MuotoState.DOING_CHORE:
 			pass
 		_:
@@ -35,15 +42,32 @@ func _physics_process(delta: float) -> void:
 
 func change_state(new_state: MuotoState) -> void:
 	if(new_state == muoto_state):
-		print("Tried to change to the current Muoto state: " + str(muoto_state))
+		push_warning("Tried to change to the current Muoto state: " + str(muoto_state))
+		return
+	# Exit state functionality.
 	match muoto_state:
 		MuotoState.IDLE:
-			sprite.play("idle_wide")
+			pass
 		MuotoState.GOING_TO_CHORE:
-			print("New target pos: " + str(position))
-			sprite.play("walk")
+			pass
 		MuotoState.DOING_CHORE:
 			pass
+		_:
+			push_error("Unknown state!")
+	# Enter state functionality.
+	match new_state:
+		MuotoState.IDLE:
+			if current_chore != null:
+				current_chore.change_state(ChoreBase.ChoreState.IN_COOLDOWN)
+				current_chore = null
+			sprite.play("idle_wide")
+		MuotoState.GOING_TO_CHORE:
+			current_chore.change_state(ChoreBase.ChoreState.WAITING_FOR_MUOTO)
+			sprite.play("walk")
+		MuotoState.DOING_CHORE:
+			current_chore.change_state(ChoreBase.ChoreState.IN_MUOTO_INTERACTION)
+			do_chore()
+			sprite.play("idle")
 		_:
 			push_error("Unknown state!")
 	muoto_state = new_state
@@ -51,22 +75,35 @@ func change_state(new_state: MuotoState) -> void:
 	debug_label.text = str(state_name)
 
 
-func physics_move_towards(delta: float, target_pos: float) -> void:
-	var new_pos = global_position.move_toward(Vector2(target_pos, global_position.y), walk_speed * delta)
-	global_position.x += delta * walk_speed
-	print("Muotos pos: " + str(global_position.x))
+func process_idle() -> void:
+	buy_chore_with_motivation_if_possible()
 
 
-func physics_process_idle(delta: float) -> void:
-	
+## Returns true when target has been reached.
+func move_towards_target(delta: float) -> bool:
+	var max_movement_distance: float = delta * walk_speed
+	var x_offset_to_target = current_chore.muoto_target_x_pos - global_position.x
+	# Flip the sprite based on movement dir.
+	sprite.flip_h = x_offset_to_target < 0
+	if abs(x_offset_to_target) <= max_movement_distance:
+		global_position.x += x_offset_to_target
+		return true
+	global_position.x += max_movement_distance * sign(x_offset_to_target)
+	return false
+
+
+func buy_chore_with_motivation_if_possible() -> void:
+	var lowest_cost_chore: ChoreBase = chore_manager.chore_with_lowest_m_cost()
+	if lowest_cost_chore != null:
+		if lowest_cost_chore.current_motivation_cost <= motivation_bar.motivation_points:
+			motivation_bar.subtract_motivation_points(lowest_cost_chore.current_motivation_cost)
+			current_chore = lowest_cost_chore
+			change_state(MuotoState.GOING_TO_CHORE)
+
+
+func do_chore() -> void:
+	# TODO: This is risky because this function should be cancelled if state is changed
+	# elsewhere before the timer runs out.
+	await get_tree().create_timer(2.0).timeout
+	change_state(MuotoState.IDLE)
 	pass
-
-
-func buy_chore_with_motivation_if_possible(chore: ChoreBase) -> void:
-	# TODO: If the current state is ok for buying a chore, then:
-	if chore.current_motivation_cost <= motivation_bar.motivation_points:
-		motivation_bar.subtract_motivation_points(chore.current_motivation_cost)
-		chore.change_state(ChoreBase.ChoreState.WAITING_FOR_MUOTO)
-		current_chore = chore
-		muoto_state = MuotoState.GOING_TO_CHORE
-	# TODO: Have muoto enter "going to chore" state.

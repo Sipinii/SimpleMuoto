@@ -1,4 +1,4 @@
-class_name ChoreManger
+class_name ChoreManager
 extends Node
 
 @export var chores: Array[ChoreBase]
@@ -10,21 +10,15 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	var lowest_cost_chore: ChoreBase = chore_with_lowest_m_cost()
-	if lowest_cost_chore != null:
-		muoto.buy_chore_with_motivation_if_possible(lowest_cost_chore)
-	pass
-
-
+## NOTE: Only takes into account Chores that can currently be bought.
 func chore_with_lowest_m_cost() -> ChoreBase:
 	if chores.is_empty():
 		return null
 	var lowest := chores[0]
 	for chore in chores:
-		if chore.current_motivation_cost < lowest.current_motivation_cost:
-			lowest = chore
+		if chore.current_state == ChoreBase.ChoreState.COST_DECREASING:
+			if chore.current_motivation_cost < lowest.current_motivation_cost:
+				lowest = chore
 	return lowest
 
 

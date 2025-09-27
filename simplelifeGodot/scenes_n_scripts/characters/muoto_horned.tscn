@@ -24,9 +24,9 @@ debug_label = NodePath("Label")
 z_as_relative = false
 position = Vector2(-1, -32)
 sprite_frames = ExtResource("1_cha4v")
-animation = &"idle_wide"
+animation = &"idle"
 autoplay = "idle_wide"
-frame_progress = 0.469527
+frame_progress = 0.590433
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
