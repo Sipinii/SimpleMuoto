@@ -28,10 +28,14 @@ var motivation_cost_ticker: float = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Material needs to be duplicated, otherwise changing the material in one instance
+	# will change the material in all the other instances which use the same material.
+	chore_sprite.material = chore_sprite.material.duplicate()
 	current_motivation_cost = max_motivation_cost
 	motivation_cost_bar.max_value = max_motivation_cost
 	motivation_cost_bar.value = max_motivation_cost
 	label.text = str(max_motivation_cost)
+	# We want the motivation cost bar to be only visible when hovering over the sprite.
 	motivation_cost_bar.visible = false
 	clickable_area.mouse_entered_area.connect(_on_clickable_area_mouse_entered_area)
 	clickable_area.mouse_exited_area.connect(_on_clickable_area_mouse_exited_area)

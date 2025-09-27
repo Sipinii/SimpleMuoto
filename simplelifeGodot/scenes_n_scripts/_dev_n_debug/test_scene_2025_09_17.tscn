@@ -159,3 +159,7 @@ muoto = NodePath("../MuotoHorned")
 
 [node name="ChoreBase" parent="Home/ChoreManager" instance=ExtResource("30_0cwmb")]
 max_motivation_cost = 10
+
+[node name="ChoreBase2" parent="Home/ChoreManager" instance=ExtResource("30_0cwmb")]
+position = Vector2(115, 0)
+max_motivation_cost = 15

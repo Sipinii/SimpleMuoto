@@ -21,7 +21,6 @@ var collision_polygon: CollisionPolygon2D
 func _ready() -> void:
 	if create_polygon_collider:
 		sprite_to_polygon()
-	pass # Replace with function body.
 
 
 # TODO: This seems to be enough for clicks to register when this node has a collision
