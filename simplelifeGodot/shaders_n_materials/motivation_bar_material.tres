@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dlepyalu1eifl"]
+
+[ext_resource type="Shader" uid="uid://dxag43b87becu" path="res://shaders_n_materials/button_hover_color.gdshader" id="1_7qndo"]
+
+[resource]
+shader = ExtResource("1_7qndo")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_value = 0.0

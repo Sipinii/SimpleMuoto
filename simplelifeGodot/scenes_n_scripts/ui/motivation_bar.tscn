@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=3 uid="uid://br2alhv0ieoyx"]
+
+[ext_resource type="Script" uid="uid://8ngdithp6wii" path="res://scenes_n_scripts/ui/motivation_bar.gd" id="1_mw7ni"]
+[ext_resource type="Texture2D" uid="uid://upv4bo70bfny" path="res://assets/sprites/temp_home_motivation_bg_down.png" id="2_wqcg2"]
+[ext_resource type="Material" uid="uid://dlepyalu1eifl" path="res://shaders_n_materials/motivation_bar_material.tres" id="3_mw7ni"]
+[ext_resource type="Texture2D" uid="uid://bwf238ruerww8" path="res://assets/sprites/temp_home_motivation_bg_up.png" id="4_5frr6"]
+[ext_resource type="PackedScene" uid="uid://cl66j8glos6pc" path="res://scenes_n_scripts/ui/clickable_area.tscn" id="5_jh3ew"]
+[ext_resource type="Texture2D" uid="uid://do1s8mkw6ef4u" path="res://assets/sprites/temp_home_motivate_button_down.png" id="6_kgwsj"]
+[ext_resource type="Texture2D" uid="uid://b37n3fuh4hc3f" path="res://assets/sprites/temp_home_motivate_button_up.png" id="7_piw2d"]
+[ext_resource type="FontFile" uid="uid://bhiblrg46fs2w" path="res://assets/third_party/fonts/Bitrimus.ttf" id="8_wqcg2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mw7ni"]
+font = ExtResource("8_wqcg2")
+font_size = 44
+font_color = Color(0.122313, 0.358631, 1, 1)
+outline_size = 4
+outline_color = Color(1, 1, 0, 1)
+
+[node name="MotivationBar" type="Node" node_paths=PackedStringArray("motivation_bar_clickable_area", "star_button_clickable_area")]
+script = ExtResource("1_mw7ni")
+motivation_bar_clickable_area = NodePath("MotivationBarUp/ClickableArea")
+star_button_clickable_area = NodePath("StarButtonUp/ClickableArea")
+
+[node name="MotivationBarDown" type="Sprite2D" parent="."]
+z_index = 350
+z_as_relative = false
+texture = ExtResource("2_wqcg2")
+
+[node name="MotivationBarUp" type="Sprite2D" parent="."]
+z_index = 351
+z_as_relative = false
+material = ExtResource("3_mw7ni")
+texture = ExtResource("4_5frr6")
+
+[node name="ClickableArea" parent="MotivationBarUp" instance=ExtResource("5_jh3ew")]
+create_polygon_collider = true
+
+[node name="StarButtonDown" type="Sprite2D" parent="."]
+z_index = 360
+z_as_relative = false
+texture = ExtResource("6_kgwsj")
+
+[node name="StarButtonUp" type="Sprite2D" parent="."]
+z_index = 361
+z_as_relative = false
+texture = ExtResource("7_piw2d")
+
+[node name="ClickableArea" parent="StarButtonUp" instance=ExtResource("5_jh3ew")]
+create_polygon_collider = true
+
+[node name="MotivationPointAmount" type="Label" parent="."]
+z_index = 361
+offset_left = -57.0
+offset_top = -137.0
+offset_right = 51.0
+offset_bottom = -83.0
+text = "0 m"
+label_settings = SubResource("LabelSettings_mw7ni")
+horizontal_alignment = 2
+vertical_alignment = 1

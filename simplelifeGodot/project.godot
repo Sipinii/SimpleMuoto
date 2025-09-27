@@ -31,6 +31,10 @@ window/size/window_width_override=768
 window/size/window_height_override=768
 window/stretch/mode="canvas_items"
 
+[gui]
+
+fonts/dynamic_fonts/use_oversampling=false
+
 [input]
 
 click_primary={

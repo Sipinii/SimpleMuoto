@@ -153,8 +153,9 @@ texture = ExtResource("19_7wl2t")
 
 [node name="MotivationBar" parent="Home" instance=ExtResource("22_ytxf8")]
 
-[node name="ChoreManager" type="Node" parent="Home" node_paths=PackedStringArray("muoto")]
+[node name="ChoreManager" type="Node" parent="Home" node_paths=PackedStringArray("chores", "muoto")]
 script = ExtResource("25_7ot0g")
+chores = [NodePath("ChoreBase")]
 muoto = NodePath("../MuotoHorned")
 
 [node name="ChoreBase" parent="Home/ChoreManager" instance=ExtResource("30_0cwmb")]

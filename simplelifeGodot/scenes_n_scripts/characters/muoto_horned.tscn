@@ -1,16 +1,27 @@
-[gd_scene load_steps=4 format=3 uid="uid://ne4ke64ln2u7"]
+[gd_scene load_steps=6 format=3 uid="uid://ne4ke64ln2u7"]
 
 [ext_resource type="SpriteFrames" uid="uid://6y551mioclqc" path="res://assets/sprite_frames/muoto_horned_sprite_frames.tres" id="1_cha4v"]
 [ext_resource type="Script" uid="uid://bplu1ftlm8une" path="res://scenes_n_scripts/characters/muoto_horned.gd" id="1_pumqa"]
+[ext_resource type="FontFile" uid="uid://bhiblrg46fs2w" path="res://assets/third_party/fonts/Bitrimus.ttf" id="3_llgrm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_61x1r"]
 radius = 13.0
 height = 28.0
 
-[node name="MuotoHorned" type="AnimatableBody2D"]
+[sub_resource type="LabelSettings" id="LabelSettings_qs1i0"]
+paragraph_spacing = -5.0
+font = ExtResource("3_llgrm")
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="MuotoHorned" type="AnimatableBody2D" node_paths=PackedStringArray("sprite", "debug_label")]
+z_as_relative = false
 script = ExtResource("1_pumqa")
+sprite = NodePath("AnimatedSprite2D")
+debug_label = NodePath("Label")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_as_relative = false
 position = Vector2(-1, -32)
 sprite_frames = ExtResource("1_cha4v")
 animation = &"idle_wide"
@@ -18,6 +29,19 @@ autoplay = "idle_wide"
 frame_progress = 0.469527
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
 z_as_relative = false
 position = Vector2(0, -14)
 shape = SubResource("CapsuleShape2D_61x1r")
+
+[node name="Label" type="Label" parent="."]
+z_index = 9
+z_as_relative = false
+offset_left = -69.0
+offset_top = -58.0
+offset_right = 69.0
+offset_bottom = -31.0
+text = "asd"
+label_settings = SubResource("LabelSettings_qs1i0")
+horizontal_alignment = 1
+vertical_alignment = 1

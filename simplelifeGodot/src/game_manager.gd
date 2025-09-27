@@ -1,4 +1,6 @@
 extends Node
+## Controls the highest level functionality of the game such as initializing/quitting
+## the application or changing between (highest level) game modes.
 
 
 func _ready() -> void:

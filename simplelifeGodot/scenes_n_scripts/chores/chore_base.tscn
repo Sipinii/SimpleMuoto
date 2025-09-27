@@ -1,0 +1,76 @@
+[gd_scene load_steps=11 format=3 uid="uid://d0jgp43dcwybr"]
+
+[ext_resource type="Script" uid="uid://civpg0qd0gcde" path="res://scenes_n_scripts/chores/chore_base.gd" id="1_lync5"]
+[ext_resource type="Texture2D" uid="uid://cuq4cqs4skyjp" path="res://assets/sprites/temp_home_kitchen_range.png" id="2_3et3c"]
+[ext_resource type="Shader" uid="uid://dxag43b87becu" path="res://shaders_n_materials/button_hover_color.gdshader" id="2_vfbt2"]
+[ext_resource type="PackedScene" uid="uid://cl66j8glos6pc" path="res://scenes_n_scripts/ui/clickable_area.tscn" id="3_vfbt2"]
+[ext_resource type="FontFile" uid="uid://bhiblrg46fs2w" path="res://assets/third_party/fonts/Bitrimus.ttf" id="6_uwj44"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uwj44"]
+shader = ExtResource("2_vfbt2")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_value = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uwj44"]
+size = Vector2(32, 27)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbdw1"]
+bg_color = Color(0.299547, 0.299547, 0.299547, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.176419, 0.176419, 0.176419, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_07o6c"]
+bg_color = Color(0, 0.451434, 0.123899, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(0.176471, 0.176471, 0.176471, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gkage"]
+font = ExtResource("6_uwj44")
+font_size = 17
+
+[node name="ChoreBase" type="Node2D" node_paths=PackedStringArray("chore_sprite", "motivation_cost_bar", "label", "clickable_area")]
+script = ExtResource("1_lync5")
+chore_sprite = NodePath("ChoreObject")
+motivation_cost_bar = NodePath("MotivationCostBar")
+label = NodePath("MotivationCostBar/Label")
+clickable_area = NodePath("ChoreObject/ClickableArea")
+
+[node name="ChoreObject" type="Sprite2D" parent="."]
+z_index = -100
+z_as_relative = false
+material = SubResource("ShaderMaterial_uwj44")
+texture = ExtResource("2_3et3c")
+
+[node name="ClickableArea" parent="ChoreObject" instance=ExtResource("3_vfbt2")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChoreObject/ClickableArea"]
+position = Vector2(-51, 101.5)
+shape = SubResource("RectangleShape2D_uwj44")
+
+[node name="MotivationCostBar" type="ProgressBar" parent="."]
+z_index = 150
+z_as_relative = false
+offset_left = -65.0
+offset_top = 70.0
+offset_right = -38.0
+offset_bottom = 79.0
+theme_override_styles/background = SubResource("StyleBoxFlat_qbdw1")
+theme_override_styles/fill = SubResource("StyleBoxFlat_07o6c")
+value = 12.24
+show_percentage = false
+
+[node name="Label" type="Label" parent="MotivationCostBar"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = -6.0
+offset_right = 27.0
+offset_bottom = 13.0
+text = "0"
+label_settings = SubResource("LabelSettings_gkage")
+horizontal_alignment = 1
+vertical_alignment = 1
