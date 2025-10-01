@@ -57,14 +57,11 @@ vertical_alignment = 1
 [node name="StateMachine" parent="." node_paths=PackedStringArray("_initial_state") instance=ExtResource("4_qs1i0")]
 _initial_state = NodePath("MuotoStateIdle")
 
-[node name="MuotoStateIdle" type="Node" parent="StateMachine" node_paths=PackedStringArray("muoto")]
+[node name="MuotoStateIdle" type="Node" parent="StateMachine"]
 script = ExtResource("5_mebc3")
-muoto = NodePath("../..")
 
-[node name="MuotoStateGoingToChore" type="Node" parent="StateMachine" node_paths=PackedStringArray("muoto")]
+[node name="MuotoStateGoingToChore" type="Node" parent="StateMachine"]
 script = ExtResource("6_yyxi0")
-muoto = NodePath("../..")
 
-[node name="MuotoStateDoingChore" type="Node" parent="StateMachine" node_paths=PackedStringArray("muoto")]
+[node name="MuotoStateDoingChore" type="Node" parent="StateMachine"]
 script = ExtResource("7_yyxi0")
-muoto = NodePath("../..")

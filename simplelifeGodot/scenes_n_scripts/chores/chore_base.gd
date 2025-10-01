@@ -44,15 +44,7 @@ func _ready() -> void:
 	# Progress bar fill material also needs to be duplicated.
 	# TODO: For whatever reason this doesn't work. Fix.
 	var bar_fill_style: StyleBoxFlat = motivation_cost_bar.get_theme_stylebox("fill")
-	if bar_fill_style == null:
-		print("Stylebox was null.")
-	else:
-		print("Stylebox color: " + str(bar_fill_style.bg_color))
 	bar_fill_style = bar_fill_style.duplicate()
-	if bar_fill_style == null:
-		print("Stylebox was null.")
-	else:
-		print("Stylebox color: " + str(bar_fill_style.bg_color))
 	motivation_cost_bar.add_theme_stylebox_override("fill", bar_fill_style)
 	current_motivation_cost = max_motivation_cost
 	motivation_cost_bar.max_value = max_motivation_cost
@@ -106,7 +98,6 @@ func change_state(new_state: ChoreState) -> void:
 	# Exit state functionality.
 	match current_state:
 		ChoreState.IN_COOLDOWN:
-			print("got here")
 			pass
 		ChoreState.COST_DECREASING:
 			pass

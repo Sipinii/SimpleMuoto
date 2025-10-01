@@ -4,23 +4,19 @@ extends Node
 ## in the actual state classes which inherit from this.
 
 
-func ready() -> void:
+func process(_delta: float) -> void:
 	pass
 
 
-func process(delta: float) -> void:
+func physics_process(_delta: float) -> void:
 	pass
 
 
-func physics_process(delta: float) -> void:
+func unhandled_input(_event: InputEvent) -> void:
 	pass
 
 
-func unhandled_input(event: InputEvent) -> void:
-	pass
-
-
-func enter_state(previous_state: State, params: Dictionary):
+func enter_state(_previous_state: State):
 	pass
 
 
