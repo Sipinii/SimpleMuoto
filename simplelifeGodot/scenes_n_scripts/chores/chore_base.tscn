@@ -33,12 +33,13 @@ border_color = Color(0.176471, 0.176471, 0.176471, 1)
 font = ExtResource("6_uwj44")
 font_size = 17
 
-[node name="ChoreBase" type="Node2D" node_paths=PackedStringArray("chore_sprite", "motivation_cost_bar", "label", "clickable_area")]
+[node name="ChoreBase" type="Node2D" node_paths=PackedStringArray("chore_sprite", "motivation_cost_bar", "label", "clickable_area", "muoto_target_pos")]
 script = ExtResource("1_lync5")
 chore_sprite = NodePath("ChoreObject")
 motivation_cost_bar = NodePath("MotivationCostBar")
 label = NodePath("MotivationCostBar/Label")
 clickable_area = NodePath("ChoreObject/ClickableArea")
+muoto_target_pos = NodePath("MuotoTarget")
 
 [node name="ChoreObject" type="Sprite2D" parent="."]
 z_index = -100
@@ -74,3 +75,6 @@ text = "WAITING"
 label_settings = SubResource("LabelSettings_gkage")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MuotoTarget" type="Node2D" parent="."]
+position = Vector2(-51, 115)

@@ -58,6 +58,7 @@ func change_state(new_state: MuotoState) -> void:
 	match new_state:
 		MuotoState.IDLE:
 			if current_chore != null:
+				## TODO: Use signals.
 				current_chore.change_state(ChoreBase.ChoreState.IN_COOLDOWN)
 				current_chore = null
 			sprite.play("idle_wide")
@@ -82,7 +83,7 @@ func process_idle() -> void:
 ## Returns true when target has been reached.
 func move_towards_target(delta: float) -> bool:
 	var max_movement_distance: float = delta * walk_speed
-	var x_offset_to_target = current_chore.muoto_target_x_pos - global_position.x
+	var x_offset_to_target = current_chore.muoto_target_pos.global_position.x - global_position.x
 	# Flip the sprite based on movement dir.
 	sprite.flip_h = x_offset_to_target < 0
 	if abs(x_offset_to_target) <= max_movement_distance:

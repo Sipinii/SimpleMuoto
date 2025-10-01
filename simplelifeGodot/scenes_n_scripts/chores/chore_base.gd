@@ -10,14 +10,13 @@ enum ChoreState {
 
 @export_group("General")
 ## Max cooldown time in seconds.
-@export var max_cooldown: int = 100
+@export var max_cooldown: int = 5
+@export var cooldown_tick_duration: float = 1
 #var current_cooldown: int
-@export var max_motivation_cost: int = 100
+@export var max_motivation_cost: int = 10
 ## How long does it take for the motivation to decrease?
 @export var motivation_tick_duration: float = 1
 ## X position that Muoto uses as its target when moving to the Chore.
-## TODO: Change this to a node so that its easier to set the postition.
-@export var muoto_target_x_pos: float = 0
 @export_group("Visuals")
 @export var cost_decreasing_color: float = 0
 @export_group("Internal Refs")
@@ -25,13 +24,16 @@ enum ChoreState {
 @export var motivation_cost_bar: ProgressBar
 @export var label: Label
 @export var clickable_area: ClickableArea
+@export var muoto_target_pos: Node2D
 
 var current_state := ChoreState.COST_DECREASING
 var current_motivation_cost: int
+var current_cooldown: int
 var is_being_acted_upon: bool = false
 ## Keeps count of time towards motivation_tick_duration
 var motivation_cost_ticker: float = 0
 var cooldown_ticker: float = 0
+var changing_state: bool = false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -39,13 +41,26 @@ func _ready() -> void:
 	# Material needs to be duplicated, otherwise changing the material in one instance
 	# will change the material in all the other instances which use the same material.
 	chore_sprite.material = chore_sprite.material.duplicate()
+	# Progress bar fill material also needs to be duplicated.
+	# TODO: For whatever reason this doesn't work. Fix.
+	var bar_fill_style: StyleBoxFlat = motivation_cost_bar.get_theme_stylebox("fill")
+	if bar_fill_style == null:
+		print("Stylebox was null.")
+	else:
+		print("Stylebox color: " + str(bar_fill_style.bg_color))
+	bar_fill_style = bar_fill_style.duplicate()
+	if bar_fill_style == null:
+		print("Stylebox was null.")
+	else:
+		print("Stylebox color: " + str(bar_fill_style.bg_color))
+	motivation_cost_bar.add_theme_stylebox_override("fill", bar_fill_style)
 	current_motivation_cost = max_motivation_cost
 	motivation_cost_bar.max_value = max_motivation_cost
 	motivation_cost_bar.value = max_motivation_cost
 	label.text = str(max_motivation_cost)
 	# We want the motivation cost bar to be only visible when hovering over the sprite.
 	motivation_cost_bar.visible = false
-	motivation_cost_bar.get("theme_override_styles/fill").bg_color = Color.FOREST_GREEN
+	#motivation_cost_bar.get("theme_override_styles/fill").bg_color = Color.FOREST_GREEN
 	clickable_area.mouse_entered_area.connect(_on_clickable_area_mouse_entered_area)
 	clickable_area.mouse_exited_area.connect(_on_clickable_area_mouse_exited_area)
 
@@ -82,11 +97,16 @@ func _on_clickable_area_mouse_exited_area() -> void:
 
 
 func change_state(new_state: ChoreState) -> void:
+	if changing_state:
+		push_error("Tried to change state while already in a state change.")
+		return
+	changing_state = true
 	if(new_state == current_state):
 		print("Tried to change to same state this was already in: " + str(current_state))
 	# Exit state functionality.
 	match current_state:
 		ChoreState.IN_COOLDOWN:
+			print("got here")
 			pass
 		ChoreState.COST_DECREASING:
 			pass
@@ -101,6 +121,7 @@ func change_state(new_state: ChoreState) -> void:
 		ChoreState.IN_COOLDOWN:
 			motivation_cost_bar.get("theme_override_styles/fill").bg_color = Color.CYAN
 			cooldown_ticker = 0
+			current_cooldown = max_cooldown
 			label.text = str("COOLING")
 			pass
 		ChoreState.COST_DECREASING:
@@ -123,22 +144,30 @@ func change_state(new_state: ChoreState) -> void:
 		_:
 			push_error("Unknown state!")
 	current_state = new_state
-	pass
+	changing_state = false
 
-
+## Process of "IN_COOLDOWN" state.
 func process_in_cooldown(delta: float) -> void:
+	while cooldown_ticker > cooldown_tick_duration:
+		cooldown_ticker -= cooldown_tick_duration
+		current_cooldown -= 1
+		motivation_cost_bar.value = current_cooldown
 	cooldown_ticker += delta
-	label.text = str("ACTING")
+	label.text = str("COOLING")
+	if current_cooldown <= 0:
+		change_state(ChoreState.COST_DECREASING)
 
 
-## State update when motivation cost decreases.
+## Process of "COST_DECREASING" state.
 func process_cost_decreasing(delta: float) -> void:
 	while motivation_cost_ticker > motivation_tick_duration:
 		motivation_cost_ticker -= motivation_tick_duration
 		current_motivation_cost -= 1
 		# Motivation cost can never be under 1
 		current_motivation_cost = max(current_motivation_cost, 1)
-		motivation_cost_bar.value = current_motivation_cost
+		# We use -1 so that when the bar goes to 1, the fill will be empty since
+		# 1 is the lowest possible number.
+		motivation_cost_bar.value = current_motivation_cost - 1
 		label.text = str(current_motivation_cost)
 	motivation_cost_ticker += delta
 	pass

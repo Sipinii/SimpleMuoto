@@ -156,14 +156,15 @@ texture = ExtResource("19_7wl2t")
 
 [node name="ChoreManager" type="Node" parent="Home" node_paths=PackedStringArray("chores", "muoto")]
 script = ExtResource("25_7ot0g")
-chores = [NodePath("ChoreBase"), NodePath("ChoreBase2")]
+chores = [NodePath("ChoreBase"), NodePath("ChoreBase2"), NodePath("ChoreBase3")]
 muoto = NodePath("../MuotoHorned")
 
 [node name="ChoreBase" parent="Home/ChoreManager" instance=ExtResource("30_0cwmb")]
-max_motivation_cost = 10
-muoto_target_x_pos = -50.0
 
 [node name="ChoreBase2" parent="Home/ChoreManager" instance=ExtResource("30_0cwmb")]
-position = Vector2(115, 0)
-max_motivation_cost = 15
-muoto_target_x_pos = 65.0
+position = Vector2(74, 0)
+max_motivation_cost = 20
+
+[node name="ChoreBase3" parent="Home/ChoreManager" instance=ExtResource("30_0cwmb")]
+position = Vector2(122, 0)
+max_motivation_cost = 30
