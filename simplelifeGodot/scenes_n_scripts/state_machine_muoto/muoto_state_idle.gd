@@ -11,6 +11,6 @@ func process(_delta: float) -> void:
 func enter_state(_previous_state: State):
 	if muoto.current_chore != null:
 		## TODO: Use signals.
-		muoto.current_chore.change_state(ChoreBase.ChoreState.IN_COOLDOWN)
+		muoto.current_chore.state_machine.change_state(muoto.current_chore.chore_state_in_cooldown)
 		muoto.current_chore = null
 	muoto.sprite.play("idle_wide")

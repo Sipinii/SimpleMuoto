@@ -58,3 +58,6 @@ func set_is_active(value):
 	set_physics_process(value)
 	set_process_unhandled_input(value)
 	set_block_signals(not value)
+
+func current_state() -> State:
+	return _current_state

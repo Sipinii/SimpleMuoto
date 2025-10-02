@@ -1,10 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://d0jgp43dcwybr"]
+[gd_scene load_steps=16 format=3 uid="uid://d0jgp43dcwybr"]
 
 [ext_resource type="Script" uid="uid://civpg0qd0gcde" path="res://scenes_n_scripts/chores/chore_base.gd" id="1_lync5"]
 [ext_resource type="Texture2D" uid="uid://cuq4cqs4skyjp" path="res://assets/sprites/temp_home_kitchen_range.png" id="2_3et3c"]
 [ext_resource type="Shader" uid="uid://dxag43b87becu" path="res://shaders_n_materials/button_hover_color.gdshader" id="2_vfbt2"]
 [ext_resource type="PackedScene" uid="uid://cl66j8glos6pc" path="res://scenes_n_scripts/ui/clickable_area.tscn" id="3_vfbt2"]
+[ext_resource type="PackedScene" uid="uid://bcn1686wwso38" path="res://scenes_n_scripts/state_machine_template/state_machine.tscn" id="6_gkage"]
 [ext_resource type="FontFile" uid="uid://bhiblrg46fs2w" path="res://assets/third_party/fonts/Bitrimus.ttf" id="6_uwj44"]
+[ext_resource type="Script" uid="uid://donnabo771dhx" path="res://scenes_n_scripts/state_machine_chore/chore_state_cost_decreasing.gd" id="7_hct2n"]
+[ext_resource type="Script" uid="uid://duskup4tdb8u3" path="res://scenes_n_scripts/state_machine_chore/chore_state_in_cooldown.gd" id="8_ka1d6"]
+[ext_resource type="Script" uid="uid://dhy8r6hlx0550" path="res://scenes_n_scripts/state_machine_chore/chore_state_waiting_for_muoto.gd" id="9_boyru"]
+[ext_resource type="Script" uid="uid://cdrnwrad5h832" path="res://scenes_n_scripts/state_machine_chore/chore_state_in_muoto_interaction.gd" id="10_168wr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uwj44"]
 shader = ExtResource("2_vfbt2")
@@ -33,13 +38,18 @@ border_color = Color(0.176471, 0.176471, 0.176471, 1)
 font = ExtResource("6_uwj44")
 font_size = 17
 
-[node name="ChoreBase" type="Node2D" node_paths=PackedStringArray("chore_sprite", "motivation_cost_bar", "label", "clickable_area", "muoto_target_pos")]
+[node name="ChoreBase" type="Node2D" node_paths=PackedStringArray("chore_state_cost_decreasing", "chore_state_in_cooldown", "chore_state_waiting_for_muoto", "chore_state_in_muoto_interaction", "chore_sprite", "motivation_cost_bar", "label", "clickable_area", "muoto_target_pos", "state_machine")]
 script = ExtResource("1_lync5")
+chore_state_cost_decreasing = NodePath("StateMachine/ChoreStateCostDecreasing")
+chore_state_in_cooldown = NodePath("StateMachine/ChoreStateInCooldown")
+chore_state_waiting_for_muoto = NodePath("StateMachine/ChoreStateWaitingForMuoto")
+chore_state_in_muoto_interaction = NodePath("StateMachine/ChoreStateInMuotoInteraction")
 chore_sprite = NodePath("ChoreObject")
 motivation_cost_bar = NodePath("MotivationCostBar")
 label = NodePath("MotivationCostBar/Label")
 clickable_area = NodePath("ChoreObject/ClickableArea")
 muoto_target_pos = NodePath("MuotoTarget")
+state_machine = NodePath("StateMachine")
 
 [node name="ChoreObject" type="Sprite2D" parent="."]
 z_index = -100
@@ -78,3 +88,22 @@ vertical_alignment = 1
 
 [node name="MuotoTarget" type="Node2D" parent="."]
 position = Vector2(-51, 115)
+
+[node name="StateMachine" parent="." node_paths=PackedStringArray("_initial_state") instance=ExtResource("6_gkage")]
+_initial_state = NodePath("ChoreStateCostDecreasing")
+
+[node name="ChoreStateCostDecreasing" type="Node" parent="StateMachine" node_paths=PackedStringArray("chore")]
+script = ExtResource("7_hct2n")
+chore = NodePath("../..")
+
+[node name="ChoreStateInCooldown" type="Node" parent="StateMachine" node_paths=PackedStringArray("chore")]
+script = ExtResource("8_ka1d6")
+chore = NodePath("../..")
+
+[node name="ChoreStateWaitingForMuoto" type="Node" parent="StateMachine" node_paths=PackedStringArray("chore")]
+script = ExtResource("9_boyru")
+chore = NodePath("../..")
+
+[node name="ChoreStateInMuotoInteraction" type="Node" parent="StateMachine" node_paths=PackedStringArray("chore")]
+script = ExtResource("10_168wr")
+chore = NodePath("../..")

@@ -1,0 +1,70 @@
+[gd_scene load_steps=10 format=3 uid="uid://ne4ke64ln2u7"]
+
+[ext_resource type="SpriteFrames" uid="uid://6y551mioclqc" path="res://assets/sprite_frames/muoto_horned_sprite_frames.tres" id="1_cha4v"]
+[ext_resource type="Script" uid="uid://bplu1ftlm8une" path="res://scenes_n_scripts/characters/muoto_horned.gd" id="1_pumqa"]
+[ext_resource type="FontFile" uid="uid://bhiblrg46fs2w" path="res://assets/third_party/fonts/Bitrimus.ttf" id="3_llgrm"]
+[ext_resource type="PackedScene" uid="uid://bcn1686wwso38" path="res://scenes_n_scripts/state_machine_template/state_machine.tscn" id="4_qs1i0"]
+[ext_resource type="Script" uid="uid://cuwxxhs7ttwjf" path="res://scenes_n_scripts/state_machine_muoto/muoto_state_idle.gd" id="5_mebc3"]
+[ext_resource type="Script" uid="uid://dcgltp2fv4kcb" path="res://scenes_n_scripts/state_machine_muoto/muoto_state_going_to_chore.gd" id="6_yyxi0"]
+[ext_resource type="Script" uid="uid://dafk62djvaqf0" path="res://scenes_n_scripts/state_machine_muoto/muoto_state_doing_chore.gd" id="7_yyxi0"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_61x1r"]
+radius = 13.0
+height = 28.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_qs1i0"]
+paragraph_spacing = -5.0
+font = ExtResource("3_llgrm")
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="MuotoHorned" type="AnimatableBody2D" node_paths=PackedStringArray("state_idle", "state_going_to_chore", "state_doing_chore", "sprite", "debug_label", "state_machine")]
+z_as_relative = false
+script = ExtResource("1_pumqa")
+state_idle = NodePath("StateMachine/MuotoStateIdle")
+state_going_to_chore = NodePath("StateMachine/MuotoStateGoingToChore")
+state_doing_chore = NodePath("StateMachine/MuotoStateDoingChore")
+sprite = NodePath("AnimatedSprite2D")
+debug_label = NodePath("Label")
+state_machine = NodePath("StateMachine")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_as_relative = false
+position = Vector2(-1, -32)
+sprite_frames = ExtResource("1_cha4v")
+animation = &"idle"
+autoplay = "idle_wide"
+frame_progress = 0.590433
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
+z_as_relative = false
+position = Vector2(0, -14)
+shape = SubResource("CapsuleShape2D_61x1r")
+
+[node name="Label" type="Label" parent="."]
+z_index = 9
+z_as_relative = false
+offset_left = -69.0
+offset_top = -58.0
+offset_right = 69.0
+offset_bottom = -31.0
+text = "asd"
+label_settings = SubResource("LabelSettings_qs1i0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StateMachine" parent="." node_paths=PackedStringArray("_initial_state") instance=ExtResource("4_qs1i0")]
+_initial_state = NodePath("MuotoStateIdle")
+
+[node name="MuotoStateIdle" type="Node" parent="StateMachine" node_paths=PackedStringArray("muoto")]
+script = ExtResource("5_mebc3")
+muoto = NodePath("../..")
+
+[node name="MuotoStateGoingToChore" type="Node" parent="StateMachine" node_paths=PackedStringArray("muoto")]
+script = ExtResource("6_yyxi0")
+muoto = NodePath("../..")
+
+[node name="MuotoStateDoingChore" type="Node" parent="StateMachine" node_paths=PackedStringArray("muoto")]
+script = ExtResource("7_yyxi0")
+muoto = NodePath("../..")

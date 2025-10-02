@@ -14,10 +14,13 @@ func _ready() -> void:
 func chore_with_lowest_m_cost() -> ChoreBase:
 	if chores.is_empty():
 		return null
-	var lowest := chores[0]
+	var lowest: ChoreBase = null
 	for chore in chores:
-		if chore.current_state == ChoreBase.ChoreState.COST_DECREASING:
-			if chore.current_motivation_cost < lowest.current_motivation_cost:
+		var current_state = chore.state_machine.current_state()
+		if current_state is ChoreStateCostDecreasing:
+			if lowest == null:
+				lowest = chore
+			elif chore.current_motivation_cost < lowest.current_motivation_cost:
 				lowest = chore
 	return lowest
 
@@ -26,10 +29,8 @@ func chore_with_lowest_m_cost() -> ChoreBase:
 func add_chore(chore: ChoreBase) -> void:
 	if not chores.has(chore):
 		chores.append(chore)
-	pass
 
 
 # TODO:
 func remove_chore(chore: ChoreBase) -> void:
 	chores.erase(chore)
-	pass

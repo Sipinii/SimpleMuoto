@@ -14,5 +14,5 @@ func process(_delta: float) -> void:
 
 func enter_state(_previous_state: State):
 	_timer = 0
-	muoto.current_chore.change_state(ChoreBase.ChoreState.IN_MUOTO_INTERACTION)
+	muoto.current_chore.state_machine.change_state(muoto.current_chore.chore_state_in_muoto_interaction)
 	muoto.sprite.play("idle")

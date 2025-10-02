@@ -10,5 +10,5 @@ func process(delta: float) -> void:
 
 
 func enter_state(_previous_state: State):
-	muoto.current_chore.change_state(ChoreBase.ChoreState.WAITING_FOR_MUOTO)
+	muoto.current_chore.state_machine.change_state(muoto.current_chore.chore_state_waiting_for_muoto)
 	muoto.sprite.play("walk")
